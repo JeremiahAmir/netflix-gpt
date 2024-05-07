@@ -1,11 +1,14 @@
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast, Slide, ToastContainer } from "react-toastify";
-
+import { useEffect } from "react";
+import { addUser, removeUser } from "../store/slices/userSlice";
+import { useDispatch } from "react-redux";
 const Header = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const user = useSelector((store) => store.user);
     const handleSignOut = () => {
         signOut(auth)
@@ -14,7 +17,6 @@ const Header = () => {
                     theme: "dark",
                     transition: Slide,
                 });
-                setTimeout(() => navigate("/"), 2000);
             })
             .catch((error) => {
                 toast(error, {
@@ -23,12 +25,31 @@ const Header = () => {
                 });
             });
     };
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const { uid, email, displayName, photoURL } = user;
+                dispatch(
+                    addUser({
+                        id: uid,
+                        email: email,
+                        name: displayName,
+                        photoURL: photoURL,
+                    })
+                );
+                navigate("/browse");
+            } else {
+                dispatch(removeUser());
+                navigate("/");
+            }
+        });
+    }, []);
     return (
         <>
             <ToastContainer />
             <div className="header-2">
                 <nav className=" py-2 md:py-4 fixed left-0 right-0 top-0 bg-gradient-to-b from-black z-10">
-                    <div className="container px-4 mx-auto md:flex md:items-center">
+                    <div className="px-4 mx-auto md:flex md:items-center">
                         <div className="flex justify-between items-center">
                             <img
                                 className="w-60"

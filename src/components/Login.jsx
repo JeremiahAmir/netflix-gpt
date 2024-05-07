@@ -8,19 +8,16 @@ import {
     updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { addUser } from "../store/slices/userSlice";
 import { useDispatch } from "react-redux";
+import { Avatar_URL, Banner_Image } from "../utils/constants";
 
-const bannerImage =
-    "https://assets.nflxext.com/ffe/siteui/vlv3/c7f07b68-7989-4ff7-a31e-11c17dcc2fea/d010c7a2-d74a-4747-a9fb-9583b918e4a0/PK-en-20240422-popsignuptwoweeks-perspective_alpha_website_large.jpg";
 const Login = () => {
     const [isSignIn, setIsSignIn] = useState(true);
     const email = useRef(null);
     const password = useRef(null);
     const name = useRef(null);
 
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleToggle = () => {
@@ -50,8 +47,7 @@ const Login = () => {
 
                     updateProfile(auth.currentUser, {
                         displayName: name.current.value,
-                        photoURL:
-                            "https://avatars.githubusercontent.com/u/73630513?v=4",
+                        photoURL: Avatar_URL,
                     })
                         .then(() => {
                             const { uid, email, displayName, photoURL } =
@@ -64,7 +60,6 @@ const Login = () => {
                                     photoURL: photoURL,
                                 })
                             );
-                            navigate("/browse");
                         })
                         .catch((error) => {
                             toast(error, {
@@ -94,7 +89,6 @@ const Login = () => {
             )
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    navigate("/browse");
                     toast("User Signed In Successfully", {
                         theme: "dark",
                         transition: Slide,
@@ -116,7 +110,7 @@ const Login = () => {
         <>
             <Header />
             <div className="absolute bg-black bg-opacity-80 min-h-full w-full">
-                <img src={bannerImage} className="w-full min-h-full" alt="" />
+                <img src={Banner_Image} className="w-full min-h-full" alt="" />
                 <div className="absolute bg-black bg-opacity-55 w-full top-0 min-h-full"></div>
             </div>
             <div className="absolute bg-black bg-opacity-80 py-16 px-20 w-3/12 my-96 mx-auto left-0 right-0">
@@ -153,11 +147,6 @@ const Login = () => {
                             autoComplete="off"
                         />
                     </div>
-                    {/* {errorMessage && (
-                        <p className="font-bold text-red-700 my-3">
-                            {errorMessage}
-                        </p>
-                    )} */}
                     <ToastContainer />
                     <button
                         onClick={handleButton}
