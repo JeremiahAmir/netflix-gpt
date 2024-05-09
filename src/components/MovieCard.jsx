@@ -1,9 +1,16 @@
+import { Link } from "react-router-dom";
 import { IMG_URL_API } from "../utils/constants";
 
-const MovieCard = ({ posterPath, title }) => {
+const MovieCard = ({ posterPath, title, id }) => {
     return (
         <>
-            <img className="w-48" src={IMG_URL_API + posterPath} alt={title} />
+            <Link to={`/movie/${id}`}>
+                <img
+                    className="w-48"
+                    src={IMG_URL_API + posterPath}
+                    alt={title}
+                />
+            </Link>
         </>
     );
 };
