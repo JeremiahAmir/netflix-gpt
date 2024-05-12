@@ -11,12 +11,14 @@ import { auth } from "../utils/firebase";
 import { addUser } from "../store/slices/userSlice";
 import { useDispatch } from "react-redux";
 import { Avatar_URL, Banner_Image } from "../utils/constants";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
     const [isSignIn, setIsSignIn] = useState(true);
     const email = useRef(null);
     const password = useRef(null);
     const name = useRef(null);
+    const navigate = useNavigate();
 
     const dispatch = useDispatch();
 
@@ -60,6 +62,7 @@ const Login = () => {
                                     photoURL: photoURL,
                                 })
                             );
+                            navigate("/browse");
                         })
                         .catch((error) => {
                             toast(error, {
@@ -93,6 +96,7 @@ const Login = () => {
                         theme: "dark",
                         transition: Slide,
                     });
+                    navigate("/browse");
                     // ...
                 })
                 .catch((error) => {

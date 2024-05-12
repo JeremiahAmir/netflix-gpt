@@ -16,7 +16,7 @@ const MovieDetails = () => {
     } = movieDetial;
     return (
         <>
-            <div className="pt-[10%] bg-black text-white w-full px-12 aspect-video">
+            <div className="pt-[10%] pb-5 bg-black text-white w-full px-12">
                 <div className="grid grid-cols-12">
                     <div className="col-span-3 mr-6">
                         <img
