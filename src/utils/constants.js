@@ -15,3 +15,18 @@ export const API_OPTIONS = {
 export const IMG_URL_API = "https://image.tmdb.org/t/p/w500";
 
 export const API_URL = "https://api.themoviedb.org/3";
+
+export const LANGUAGE_SUPPORT = [
+    {
+        identifier: "en",
+        name: "English",
+    },
+    {
+        identifier: "urdu",
+        name: "Urdu",
+    },
+    {
+        identifier: "spanish",
+        name: "Spanish",
+    },
+];

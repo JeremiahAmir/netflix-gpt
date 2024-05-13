@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { API_OPTIONS } from "../utils/constants";
+import { API_OPTIONS, API_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addPopularMovies } from "../store/slices/nowPlayingMoviesSlice";
 
@@ -8,7 +8,7 @@ const usePopularMovies = () => {
     const getPopularMovies = async () => {
         try {
             const data = await fetch(
-                "https://api.themoviedb.org/3/movie/popular?&page=1",
+                `${API_URL}/movie/popular?&page=1`,
                 API_OPTIONS
             );
             const json = await data.json();
